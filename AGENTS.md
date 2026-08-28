@@ -141,7 +141,8 @@ docs/roadmap.md       docs/specs/          spec 内章节       docs/tasks/
 - 分支：`main` / `feature/<域编号>-<功能>` / `fix/<描述>` / `change/<日期>-<简述>`
 - 提交：**Conventional Commits**，scope 用功能域编号
   - 格式：`feat(<域编号>): <描述> (T-XX-YYY)`
-- **禁止直接在 main 上改代码/提交**
+- **代码改动禁止直接提交 main**，必须走 feature/fix/change 分支
+- **文档/规范类变更**（宪法、roadmap、openspec change、docs 文档）可直接提交 main
 - Task 完成 commit 必须引用 T 编号
 
 ---
@@ -189,7 +190,8 @@ farm-manage-system/
 │   │   ├── 01-租户身份/
 │   │   │   └── tasks.md
 │   │   └── ...
-│   ├── changes/                 #   变更提案（跨域需求变更）
+│   ├── references/              #   参考资料（指南与其他项目经验总结）
+│   ├── changes/                 #   变更提案（宪法级/跨域变更）
 │   └── architecture/            #   架构决策记录（ADR）
 ├── .dsh/
 │   └── skills/                  # DSH AI 技能
@@ -244,7 +246,7 @@ farm-manage-system/
 | ❌ 没有 spec 就写代码 | 先规范，后实现 |
 | ❌ 先改代码后补文档 | 变更走提案 |
 | ❌ 没有测试就提交 | TDD 铁律 |
-| ❌ 直接改 main 分支 | 任何改动先切分支 |
+| ❌ 代码直接进 main | 代码必须走分支；文档/规范变更可直提 main |
 | ❌ 推测性开发 | 只做 spec 要求的功能 |
 | ❌ 顺手重构 | 不在 Task 范围内的改动 |
 | ❌ 静默忽略错误 | 空 catch、返回 null 表示失败 |
