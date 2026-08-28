@@ -26,14 +26,14 @@ docs/roadmap.md       docs/specs/          spec 内章节       docs/tasks/
 | 层级 | 文档位置 | 数量 | 示例 |
 |------|----------|------|------|
 | L1 里程碑 | `docs/roadmap.md` | 1 个 | M0 基座 → M1 主线核心 → M2 主线完整 |
-| L2 功能域 | `docs/specs/<编号>-<域名>/spec.md` | N 个（一个域一个） | `01-租户身份/spec.md`、`02-农场资源/spec.md` |
+| L2 功能域 | `docs/specs/<编号>-<slug>/spec.md` | N 个（一个域一个） | `01-tenant-auth/spec.md`、`02-farm-resource/spec.md` |
 | L3 功能 | spec.md 内的章节 | 每个域 3~8 个 | 「登录」「注册」「权限管理」 |
-| L4 任务 | `docs/tasks/<编号>-<域名>/tasks.md` | 每个域 5~20 个 | `T-01-001` 建表、`T-01-002` 接口 |
+| L4 任务 | `docs/tasks/<编号>-<slug>/tasks.md`（同步副本） | 每个域 5~20 个 | `T-01-001` 建表、`T-01-002` 接口 |
 
 **AI 行为约束**：
 - 当用户说"写需求文档"时，**必须先确认是哪个层级**（roadmap？某个域的 spec？还是子功能？）
 - **禁止**把所有需求堆在一个扁平 spec.md 里
-- 每个功能域独立一个 spec 文件，按 `docs/specs/<编号>-<域名>/` 目录组织
+- 每个功能域独立一个 spec 文件，按 `docs/specs/<编号>-<slug>/` 目录组织（英文 slug）
 - 跨域的需求变更走 `docs/changes/` 提案，不直接改 spec
 - 需求头脑风暴时，先确认属于哪个功能域，再在对应域下展开
 
@@ -45,6 +45,10 @@ docs/roadmap.md       docs/specs/          spec 内章节       docs/tasks/
 - 域内功能开发 MUST 走 `openspec change`（proposal → specs → design → tasks → apply → archive）。
 - 宪法/roadmap/跨域变更 MUST 走 `docs/changes/` 提案。
 - `docs/specs/` 的 AC 与 `openspec/specs/` 的 Scenario 一一对应，任一变更需同步两处。
+- 域目录与 change 目录统一用英文 slug（`00-foundation`、`01-tenant-auth`……slug 表见 roadmap）；中文仅作显示名。
+- 任务编号 `T-<域编号>-<序号>` 直接写在 openspec tasks.md 条目上（唯一编号源），commit 引用此编号。
+- `docs/specs`、`docs/plans`、`docs/tasks` 的域文件由 `scripts/sync-openspec-docs.mjs` 同步（propose 与 archive 后各跑一次），副本禁止手改。
+- change 目录只保留当前活跃 change；未启动域的需求以 roadmap 的 AC 预算承载，域开工时再 propose。
 
 ---
 
@@ -94,21 +98,21 @@ docs/roadmap.md       docs/specs/          spec 内章节       docs/tasks/
 **推进顺序**：支撑件先行（01 认证/字典）→ 核心实体（02 农场/地块）→ 业务操作（03 农事/采收）。
 
 > **OpenSpec 产物 ↔ docs 映射**：proposal.md（变更提案）、specs/（spec）、design.md（plan）、tasks.md（task）。
-> 域内功能用 `openspec propose` 生成四产物并校验，再同步到 `docs/specs`、`docs/plans`、`docs/tasks` 供人类浏览。
+> 域内功能用 `openspec propose` 生成四产物并校验，再跑 `scripts/sync-openspec-docs.mjs` 同步到 `docs/specs`、`docs/plans`、`docs/tasks` 供人类浏览（同步副本禁止手改）。
 
 ### 3.1 Specify（写规范 — 定义"做什么"）
-- 输出：`docs/specs/<编号>-<域名>/spec.md`
+- 权威文件：`openspec/changes/<编号>-<slug>/specs/`（同步副本 `docs/specs/<编号>-<slug>/spec.md`）
 - 内容：用户故事 + 验收标准(AC) + 数据模型 + 业务流程 + 待确认
 - 工具：`openspec-explore` → `openspec-propose`
 
 ### 3.2 Plan（技术规划 — 定义"怎么做"）
-- 输出：`docs/plans/<编号>-<域名>/plan.md`
+- 权威文件：`openspec/changes/<编号>-<slug>/design.md`（同步副本 `docs/plans/<编号>-<slug>/plan.md`）
 - 内容：接口契约 + 表结构变更 + 组件结构 + 测试计划 + 实现顺序
 - 工具：`openspec-propose`
 
 ### 3.3 Task（任务分解 — 可执行单元）
-- 输出：`docs/tasks/<编号>-<域名>/tasks.md`
-- 编号：`T-<域编号>-<序号>`（如 `T-01-001`）
+- 权威文件：`openspec/changes/<编号>-<slug>/tasks.md`（同步副本 `docs/tasks/<编号>-<slug>/tasks.md`）
+- 编号：`T-<域编号>-<序号>`（如 `T-01-001`），直接写在 openspec tasks.md 条目上，全项目唯一，commit 引用此编号
 - 粒度：**0.5~2 天**可完成的最小可验证单元
 - 状态标记：`[ ]`未开始 / `[~]`进行中 / `[x]`已完成 / `[!]`阻塞 / `[-]`取消
 - 每个 Task 关联 1~3 条 AC
@@ -153,8 +157,8 @@ docs/roadmap.md       docs/specs/          spec 内章节       docs/tasks/
 每次新对话开始实现前，先读：
 1. docs/constitution.md（宪法 — 最高约束）
 2. docs/roadmap.md（里程碑 — 当前处于哪个阶段）
-3. docs/specs/<编号>-<域名>/spec.md（规范 — 当前域做什么）
-4. docs/tasks/<编号>-<域名>/tasks.md（进度 — 做到哪了）
+3. docs/specs/<编号>-<slug>/spec.md（规范 — 当前域做什么）
+4. docs/tasks/<编号>-<slug>/tasks.md（进度 — 做到哪了）
 然后才动手。
 
 每完成一个 Task，输出对照 AC 的自查结果。
@@ -175,19 +179,16 @@ farm-manage-system/
 │   │   └── config.ts            #   侧边栏/导航配置
 │   ├── constitution.md          #   项目宪法（最高约束）
 │   ├── roadmap.md               #   里程碑规划（功能域划分 + 阶段验收）
-│   ├── specs/                   #   功能规范 — 按域编号组织
-│   │   ├── _template/           #     spec/plan/tasks 三件套模板
-│   │   ├── 01-租户身份/         #     每个功能域一个目录
-│   │   │   └── spec.md
-│   │   ├── 02-农场资源/
+│   ├── specs/                   #   功能规范（同步副本，权威在 openspec/）
+│   │   ├── 00-foundation/       #     每个功能域一个目录（英文 slug）
 │   │   │   └── spec.md
 │   │   └── ...
-│   ├── plans/                   #   技术方案 — 同样按域编号
-│   │   ├── 01-租户身份/
+│   ├── plans/                   #   技术方案（同步副本，域开工时同步）
+│   │   ├── 01-tenant-auth/
 │   │   │   └── plan.md
 │   │   └── ...
-│   ├── tasks/                   #   任务清单 — 同样按域编号
-│   │   ├── 01-租户身份/
+│   ├── tasks/                   #   任务清单（同步副本，域开工时同步）
+│   │   ├── 01-tenant-auth/
 │   │   │   └── tasks.md
 │   │   └── ...
 │   ├── references/              #   参考资料（指南与其他项目经验总结）
@@ -198,7 +199,7 @@ farm-manage-system/
 │       └── tdd-workflow/        #   TDD 工作流自动触发
 ├── openspec/                    # OpenSpec 变更/规格/任务（机器校验权威层）
 │   ├── config.yaml              #   schema + context（宪法摘要注入）
-│   ├── changes/                 #   变更提案（proposal/specs/design/tasks）
+│   ├── changes/                 #   活跃 change（仅当前进行中的域）
 │   └── specs/                   #   归档规格（Requirement/Scenario）
 ├── server/                      # 后端服务（Java/Spring Boot 3.x）
 ├── services/
@@ -208,6 +209,7 @@ farm-manage-system/
 │   └── admin/                   #   管理后台
 ├── packages/
 │   └── shared/                  # 共享类型/常量（不放业务逻辑）
+├── scripts/                     # 工具脚本（sync-openspec-docs.mjs）
 ├── deploy/                      # 部署配置
 └── .github/workflows/           # CI/CD
 ```
@@ -227,7 +229,9 @@ farm-manage-system/
 | 层 | 待定/已定 | 说明 |
 |---|---|---|
 | 前端框架 | Vue 3 + TypeScript + Vite | 已定 |
-| UI 库 | Element Plus（倾向） | 待 spec 最终确认 |
+| UI 库 | Element Plus | 已定（ADR-002） |
+| 持久层 | MyBatis-Plus | 已定（ADR-002） |
+| 鉴权 | Sa-Token | 已定（ADR-002） |
 | 后端 | Java / Spring Boot 3.x + JDK 21 | 已定（ADR-001） |
 | 数据库 | MySQL 8 | 已定（ADR-001） |
 | 包管理 | pnpm monorepo | 已定 |

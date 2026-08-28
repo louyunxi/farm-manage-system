@@ -150,13 +150,15 @@ OpenSpec 是本项目的「变更 + 规格 + 任务」机器校验层，与 `doc
 | 行为规格 | `openspec/specs/`：`### Requirement` + `#### Scenario`（WHEN/THEN） | `docs/specs/`：用户故事 + AC + 数据模型 + 业务流程 |
 | 变更提案 | `openspec/changes/<name>/`：proposal.md、specs/、design.md、tasks.md | `docs/changes/`：仅宪法级/跨域提案 |
 | 技术规划 | design.md | `docs/plans/` |
-| 任务清单 | tasks.md（`- [ ] X.Y`） | `docs/tasks/`（`T-<域编号>-<序号>`，提交引用） |
+| 任务清单 | tasks.md（`- [ ] T-XX-YYY`，唯一编号源） | `docs/tasks/`（脚本同步副本，禁手改） |
 
 规则：
 - 域内功能开发 MUST 走 OpenSpec：`openspec new change` → proposal → specs → design → tasks → `openspec apply`（TDD）→ `openspec archive`（delta 合并进 `openspec/specs/`）。
 - 宪法/roadmap/跨域变更 MUST 走 `docs/changes/` 提案，评审通过后同步 `openspec/`。
 - OpenSpec 生成的 artifact MUST 遵守本宪法（架构原则/数据原则/术语表）；约束经 `openspec/config.yaml` 的 `context` 注入。
-- 双表达一致性：`docs/specs/` 的 AC 与 `openspec/specs/` 的 Scenario MUST 一一对应，任一变更需同步两处。
+- 任务编号唯一制：任务编号 `T-<域编号>-<序号>` MUST 直接写在 openspec tasks.md 条目上（唯一编号源），commit 引用此编号；`docs/tasks/` 仅是同步副本。域目录与 change 目录统一用英文 slug（`00-foundation`、`01-tenant-auth`……slug 表见 roadmap 功能域总览），中文仅作显示名。
+- change 目录 MUST 只保留当前活跃 change（propose 后即 apply/archive，不长期堆积）；未启动域的需求以 roadmap 的 AC 预算承载，域开工时再 propose。
+- 双表达一致性：`docs/specs/`、`docs/plans/`、`docs/tasks/` 的域文件由 `scripts/sync-openspec-docs.mjs` 从 active change / 归档 specs 生成（propose 与 archive 后各跑一次），禁止手改副本；`docs/specs/` 的 AC 与 `openspec/specs/` 的 Scenario 一一对应。
 
 ---
 
@@ -179,3 +181,4 @@ OpenSpec 是本项目的「变更 + 规格 + 任务」机器校验层，与 `doc
 | v1.0 | 2026-08-21 | 初始宪法，确立项目定位、架构原则、数据原则、术语表、SDD 约束 |
 | v1.1 | 2026-08-27 | 集成 OpenSpec：变更/规格/任务双轨与映射、文档层级双源化 |
 | v1.2 | 2026-08-27 | 数据原则对齐 MySQL（DATETIME 存 UTC）、后端定 Java/Spring Boot、IoT 边界澄清、术语表补 10 词 |
+| v1.3 | 2026-08-28 | 规范统一治理：任务编号 T-XX-YYY 唯一制（openspec tasks.md 为唯一编号源）、域目录英文 slug、change 目录仅保留活跃项、docs 副本脚本同步（提案 `20260828-规范统一治理`） |
