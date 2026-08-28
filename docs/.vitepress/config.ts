@@ -30,6 +30,7 @@ export default withMermaid(
             text: '功能规范',
             collapsed: false,
             items: [
+              { text: '规范总览', link: '/specs/' },
               // 待各功能域 spec 落定后逐项取消注释
               // { text: '01-租户与身份', link: '/specs/01-租户身份/spec' },
               // { text: '02-农场资源',   link: '/specs/02-农场资源/spec' },
@@ -47,6 +48,7 @@ export default withMermaid(
             text: '技术方案',
             collapsed: true,
             items: [
+              { text: '方案总览', link: '/plans/' },
               // 待功能域确认后逐项补充
             ],
           },
@@ -54,8 +56,18 @@ export default withMermaid(
             text: '工程',
             collapsed: true,
             items: [
+              { text: '任务清单', link: '/tasks/' },
               { text: '变更提案', link: '/changes/' },
               { text: '架构决策', link: '/architecture/' },
+            ],
+          },
+          {
+            text: '参考资料',
+            collapsed: true,
+            items: [
+              { text: 'OpenSpec × TDD 指南', link: '/references/openspec-tdd-guide' },
+              { text: 'frp-farm 项目经验', link: '/references/frp-farm-项目经验总结' },
+              { text: '桃子系统项目经验', link: '/references/taoziguanli-项目经验总结' },
             ],
           },
         ],
