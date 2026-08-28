@@ -31,17 +31,9 @@ export default withMermaid(
             collapsed: false,
             items: [
               { text: '规范总览', link: '/specs/' },
-              // 待各功能域 spec 落定后逐项取消注释
-              // { text: '01-租户与身份', link: '/specs/01-租户身份/spec' },
-              // { text: '02-农场资源',   link: '/specs/02-农场资源/spec' },
-              // { text: '03-种植生产',   link: '/specs/03-种植生产/spec' },
-              // { text: '04-采收与产后', link: '/specs/04-采收与产后/spec' },
-              // { text: '05-投入品库存', link: '/specs/05-投入品库存/spec' },
-              // { text: '06-质量安全',   link: '/specs/06-质量安全/spec' },
-              // { text: '07-溯源展示',   link: '/specs/07-溯源展示/spec' },
-              // { text: '08-基础数据',   link: '/specs/08-基础数据/spec' },
-              // { text: '09-设备接入',   link: '/specs/09-设备接入/spec' },
-              // { text: '10-AI智能体',   link: '/specs/10-AI智能体/spec' },
+              { text: '00 工程基座', link: '/specs/00-foundation/spec' },
+              { text: '01 租户与身份', link: '/specs/01-tenant-auth/spec' },
+              // 其余功能域：域开工 propose 后由同步脚本生成副本，届时在此追加
             ],
           },
           {
@@ -49,7 +41,8 @@ export default withMermaid(
             collapsed: true,
             items: [
               { text: '方案总览', link: '/plans/' },
-              // 待功能域确认后逐项补充
+              { text: '00 工程基座', link: '/plans/00-foundation/plan' },
+              { text: '01 租户与身份', link: '/plans/01-tenant-auth/plan' },
             ],
           },
           {
@@ -57,6 +50,8 @@ export default withMermaid(
             collapsed: true,
             items: [
               { text: '任务清单', link: '/tasks/' },
+              { text: '00 基座任务（T-00-xxx）', link: '/tasks/00-foundation/tasks' },
+              { text: '01 租户身份任务（T-01-xxx）', link: '/tasks/01-tenant-auth/tasks' },
               { text: '变更提案', link: '/changes/' },
               { text: '架构决策', link: '/architecture/' },
             ],

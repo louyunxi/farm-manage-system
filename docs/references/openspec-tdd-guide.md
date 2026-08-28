@@ -414,6 +414,8 @@ openspec/changes/add-tenant-login/specs/
 - **按 TDD 顺序排**：测试能先写的排前面；
 - 任务粒度 = 「一个可打勾的最小工作单元」。
 
+> **本项目覆盖**：farm-manage-system 的 tasks.md 条目编号用 `T-<域编号>-<序号>`（如 `T-01-001`，全项目唯一、commit 引用），不用上例的 `1.1` 分组编号；分组标题保留。详见 AGENTS.md 3.3。
+
 ```markdown
 # Tasks: add-tenant-login
 
@@ -670,8 +672,8 @@ npm 上 `openspec` 是无关的旧包（版本 0.0.0）。正确包名是 `@fiss
 | 你已有的                                     | OpenSpec 对应物                              | 关系                                               |
 | -------------------------------------------- | -------------------------------------------- | -------------------------------------------------- |
 | `docs/constitution.md`（宪法/铁律）        | `config.yaml` 的 `context` + `rules`   | 把铁律抄进 config.yaml，让 AI 自动遵守             |
-| `docs/roadmap.md`（8 功能域）              | `openspec/specs/<capability>/`             | 每个功能域一个 capability 目录                     |
-| `docs/specs/_template`（三件套）           | `proposal.md` + `spec.md` + `tasks.md` | 口径对齐，plan↔proposal、spec↔spec、tasks↔tasks |
+| `docs/roadmap.md`（功能域总览 + 00 基座）   | `openspec/specs/<capability>/`             | 每个功能域一个 capability 目录                     |
+| `scripts/sync-openspec-docs.mjs`（同步脚本） | `proposal.md` + `spec.md` + `tasks.md` | 把 change 三件套同步为 docs 副本：plan↔design、spec↔spec、tasks↔tasks |
 | `.dsh/skills/tdd-workflow`（TDD 自动触发） | `openspec-apply-change` + 红绿重构         | 实现阶段两者叠加：TDD 技能管代码，OpenSpec 管规格  |
 | Vitest + Playwright                          | Scenario → 测试用例                         | 单元=Vitest，跨页=e2e=Playwright                   |
 | VitePress 文档中心                           | `openspec/` 事实来源                       | docs 面向人，openspec 面向 AI                      |

@@ -1,23 +1,12 @@
 # 功能规范总览
 
-> 本目录是**人类详述层**：用户故事 + 验收标准（AC）+ 数据模型 + 业务流程。
-> 机器校验的权威规格在 `openspec/specs/`（Requirement + Scenario），两者保持 AC↔Scenario 一一对应（宪法 5.5）。
+> 本目录是**人类浏览层同步副本**：由 `scripts/sync-openspec-docs.mjs` 从 openspec 生成（propose 与 archive 后各跑一次），禁止手改。
+> 机器校验的权威规格在 `openspec/changes/<slug>/specs/`（活跃）与 `openspec/specs/`（归档），两者保持 AC↔Scenario 一一对应（宪法 5.5）。
 
-## 十大功能域
+## 域规范索引
 
-| 编号 | 功能域 | openspec change | 详述状态 |
+| 编号 | 功能域 | change | 副本状态 |
 |---|---|---|---|
-| 01 | 租户与身份 | `01-tenant-auth` | 实现该域时同步 |
-| 02 | 农场资源 | `02-farm-resource` | 实现该域时同步 |
-| 03 | 种植生产 | `03-planting-production` | 实现该域时同步 |
-| 04 | 采收与产后 | `04-harvest` | 实现该域时同步 |
-| 05 | 投入品库存 | `05-input-inventory` | 实现该域时同步 |
-| 06 | 质量安全 | `06-quality-safety` | 实现该域时同步 |
-| 07 | 溯源展示 | `07-traceability` | 实现该域时同步 |
-| 08 | 基础数据 | `08-base-data` | 实现该域时同步 |
-| 09 | 设备接入 | `09-device-integration` | 实现该域时同步 |
-| 10 | AI 智能体 | `10-ai-agent` | 实现该域时同步 |
-
-## 模板
-
-新功能域的三件套模板（spec / plan / tasks）见 [_template](_template/spec)。
+| 00 | 工程基座 | `00-foundation` | [已同步](00-foundation/spec.md) |
+| 01 | 租户与身份 | `01-tenant-auth` | [已同步](01-tenant-auth/spec.md) |
+| 02~10 | 其余功能域 | 见 [roadmap 功能域总览](../roadmap.md) | 未启动，域开工时 propose 并同步 |

@@ -1,8 +1,12 @@
 # 技术方案总览
 
-> 各功能域的技术方案位于 `docs/plans/<编号>-<域名>/plan.md`：接口契约 + 表结构变更 + 组件结构 + 测试计划。
-> 当前权威技术决策在各 openspec change 的 `design.md` 中；本目录在实现各域时同步生成。
+> 本目录是**人类浏览层同步副本**：由 `scripts/sync-openspec-docs.mjs` 从 openspec change 的 `design.md` 同步生成，禁止手改。
+> 权威文件在 `openspec/changes/<slug>/design.md`（宪法 5.5）。
 
-## 当前状态
+## 域方案索引
 
-尚无域级 plan——实现 `01-tenant-auth` 时生成第一份。
+| 编号 | 功能域 | plan 副本 |
+|---|---|---|
+| 00 | 工程基座 | [00-foundation/plan.md](00-foundation/plan.md) |
+| 01 | 租户与身份 | [01-tenant-auth/plan.md](01-tenant-auth/plan.md) |
+| 02~10 | 其余功能域 | 未启动，域开工时 propose 并同步 |
