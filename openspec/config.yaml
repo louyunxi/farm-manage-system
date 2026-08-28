@@ -1,0 +1,31 @@
+schema: spec-driven
+
+context: |
+  项目：farm-manage-system 农场管理 SaaS（前端优先、多租户、云部署）。
+  最高约束：docs/constitution.md（宪法）——任何 spec/plan/代码不得与宪法冲突。
+  架构原则：模块化单体；前后端分离（前端 Vue3+TS+Vite；后端 Java Spring Boot 3.x+JDK21）；API 优先，统一响应体 { code, message, data }；外部依赖接口化（mock 起步）。
+  数据原则：主键 UUID（列名 *_id）；时间统一 UTC 存 DATETIME（MySQL）；核心档案表软删除 is_deleted；枚举 text+CHECK；金额/数量 decimal(10,2)。
+  术语表（标准术语，禁别名）：农场 farm / 地块 plot / 批次 batch / 农事 farm_log / 租户 tenant / 员工 employee。
+  技术栈详见 docs/architecture/ADR-001-技术栈选型.md；功能域划分详见 docs/roadmap.md。
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing
